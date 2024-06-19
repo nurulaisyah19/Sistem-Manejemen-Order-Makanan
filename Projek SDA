@@ -1,0 +1,36 @@
+import csv
+
+class Pesanan:
+    def _init_(self, id, nama_pelanggan, item, total_harga):
+        self.id = id
+        self.nama_pelanggan = nama_pelanggan
+        self.item = item
+        self.total_harga = total_harga
+
+    def _str_(self):
+        return f"ID: {self.id}, Nama Pelanggan: {self.nama_pelanggan}, Item: {', '.join(self.item)}, Total Harga: {self.total_harga}"
+
+
+class SistemManajemenPesananMakanan:
+    def _init_(self):
+        self.pesanan = []
+
+    def tambah_pesanan(self, pesanan):
+        self.pesanan.append(pesanan)
+        print("Pesanan berhasil ditambahkan.")
+
+    def lihat_pesanan(self):
+        print("\nDaftar Pesanan:")
+        for pesanan in self.pesanan:
+            print(pesanan)
+
+    def perbarui_pesanan(self, id_pesanan, nama_pelanggan_baru, item_baru, total_harga_baru):
+        for pesanan in self.pesanan:
+            if pesanan.id == id_pesanan:
+                pesanan.nama_pelanggan = nama_pelanggan_baru
+                pesanan.item = item_baru
+                pesanan.total_harga = total_harga_baru
+                print("Pesanan berhasil diperbarui.")
+                return True
+        print("Pesanan tidak ditemukan.")
+        return False

@@ -1,0 +1,32 @@
+import csv
+
+class Order:
+    def _init_(self, id, customer_name, items, total_price):
+        self.id = id
+        self.customer_name = customer_name
+        self.items = items
+        self.total_price = total_price
+
+    def _str_(self):
+        return f"{self.id}, {self.customer_name}, {self.items}, {self.total_price}"
+
+
+class FoodOrderManagementSystem:
+    def _init_(self):
+        self.orders = []
+
+    def add_order(self, order):
+        self.orders.append(order)
+
+    def view_orders(self):
+        for order in self.orders:
+            print(order)
+
+    def update_order(self, order_id, new_customer_name, new_items, new_total_price):
+        for order in self.orders:
+            if order.id == order_id:
+                order.customer_name = new_customer_name
+                order.items = new_items
+                order.total_price = new_total_price
+                return True
+        return False

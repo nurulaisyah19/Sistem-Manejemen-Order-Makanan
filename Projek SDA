@@ -34,3 +34,43 @@ class SistemManajemenPesananMakanan:
                 return True
         print("Pesanan tidak ditemukan.")
         return False
+
+def hapus_pesanan(self, id_pesanan):
+        for pesanan in self.pesanan:
+            if pesanan.id == id_pesanan:
+                self.pesanan.remove(pesanan)
+                print("Pesanan berhasil dihapus.")
+                return True
+        print("Pesanan tidak ditemukan.")
+        return False
+
+    def cari_pesanan(self, kueri):
+        hasil = [pesanan for pesanan in self.pesanan if kueri.lower() in pesanan.nama_pelanggan.lower()]
+        print(f"Hasil pencarian untuk '{kueri}':")
+        if hasil:
+            for pesanan in hasil:
+                print(pesanan)
+        else:
+            print("Tidak ada pesanan yang ditemukan.")
+        return hasil
+
+    def urutkan_pesanan_berdasarkan_nama_pelanggan(self):
+        self.pesanan.sort(key=lambda x: x.nama_pelanggan)
+        print("Pesanan diurutkan berdasarkan nama pelanggan.")
+
+    def impor_pesanan_dari_csv(self, nama_file):
+        try:
+            with open(nama_file, 'r') as file:
+                reader = csv.reader(file)
+                next(reader)  # Lewati baris header
+                for row in reader:
+                    id, nama_pelanggan, item, total_harga = row
+                    item_list = item.split(';')
+                    self.tambah_pesanan(Pesanan(id, nama_pelanggan, item_list, float(total_harga)))
+            print("Pesanan diimpor dari CSV.")
+        except FileNotFoundError:
+            print("File tidak ditemukan.")
+
+
+def main():
+    sistem = SistemManajemenPesananMakanan()

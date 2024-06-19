@@ -30,3 +30,44 @@ class FoodOrderManagementSystem:
                 order.total_price = new_total_price
                 return True
         return False
+def delete_order(self, order_id):
+        for order in self.orders:
+            if order.id == order_id:
+                self.orders.remove(order)
+                return True
+        return False
+
+    def import_orders_from_csv(self, filename):
+        try:
+            with open(filename, 'r') as file:
+                reader = csv.reader(file)
+                next(reader)  # Skip header row
+                for row in reader:
+                    id, customer_name, items, total_price = row
+                    items_list = items.split(';')
+                    self.add_order(Order(id, customer_name, items_list, float(total_price)))
+        except FileNotFoundError:
+            print("File not found.")
+
+
+def main():
+    system = FoodOrderManagementSystem()
+
+    while True:
+        print("\nFood Order Management System")
+        print("1. Add Order")
+        print("2. View Orders")
+        print("3. Update Order")
+        print("4. Delete Order")
+        print("5. Import Orders from CSV")
+        print("6. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            id = input("Enter Order ID: ")
+            customer_name = input("Enter Customer Name: ")
+            items = input("Enter Items (separated by ;): ").split(';')
+            total_price = float(input("Enter Total Price: "))
+            system.add_order(Order(id, customer_name, items, total_price))
+

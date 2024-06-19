@@ -30,7 +30,8 @@ class FoodOrderManagementSystem:
                 order.total_price = new_total_price
                 return True
         return False
-def delete_order(self, order_id):
+
+    def delete_order(self, order_id):
         for order in self.orders:
             if order.id == order_id:
                 self.orders.remove(order)
@@ -71,3 +72,36 @@ def main():
             total_price = float(input("Enter Total Price: "))
             system.add_order(Order(id, customer_name, items, total_price))
 
+        elif choice == '2':
+            system.view_orders()
+
+        elif choice == '3':
+            id = input("Enter Order ID to update: ")
+            customer_name = input("Enter new Customer Name: ")
+            items = input("Enter new Items (separated by ;): ").split(';')
+            total_price = float(input("Enter new Total Price: "))
+            if system.update_order(id, customer_name, items, total_price):
+                print("Order updated successfully.")
+            else:
+                print("Order not found.")
+
+        elif choice == '4':
+            id = input("Enter Order ID to delete: ")
+            if system.delete_order(id):
+                print("Order deleted successfully.")
+            else:
+                print("Order not found.")
+
+        elif choice == '5':
+            filename = input("Enter CSV filename: ")
+            system.import_orders_from_csv(filename)
+            print("Orders imported from CSV.")
+            
+        elif choice == '6':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
